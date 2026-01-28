@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,9 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dafe.indriver.presentation.components.InDriverTextField
 
 @Composable
 fun LoginScreen() {
@@ -40,26 +44,63 @@ fun LoginScreen() {
                 .background(
                     brush = Brush.linearGradient(
                         colors = listOf(
-                            Color(15,40,123),
-                            Color(27,100,211)
+                            Color(15, 40, 123),
+                            Color(27, 100, 211)
                         )
                     )
                 )
                 .padding(paddingValues)
         ) {
-            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Spacer(modifier = Modifier.weight(.1f))
-                Text(text = "InDrive", color = Color.White, fontSize = 34.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.End)
+                Text(
+                    text = "InDrive",
+                    color = Color.White,
+                    fontSize = 34.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.End
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 Text("Login", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.weight(.1f))
-                TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
-                TextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
+                InDriverTextField(
+                    modifier = Modifier,
+                    value = email,
+                    label = "Email",
+                    icon = Icons.Outlined.Email,
+                    keyboardType = KeyboardType.Email,
+                    onValueChange = { email = it })
+                Spacer(modifier = Modifier.weight(.1f))
+                InDriverTextField(
+                    modifier = Modifier,
+                    value = password,
+                    label = "Password",
+                    icon = Icons.Outlined.Lock,
+                    hideText = true,
+                    onValueChange = { password = it}
+                )
                 Spacer(modifier = Modifier.weight(1f))
-                Button(modifier = Modifier.width(200.dp).height(55.dp), colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black), onClick = {} ) {
+                Button(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(55.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    onClick = {}) {
                     Text("Login", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                 }
-                HorizontalDivider(modifier = Modifier.width(100.dp).padding(vertical = 16.dp), color = Color.White)
+                Spacer(modifier = Modifier.weight(.1f))
+                HorizontalDivider(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .padding(vertical = 16.dp),
+                    color = Color.White
+                )
                 Text("Don't have an account? Sign up", color = Color.White)
                 Spacer(modifier = Modifier.weight(.1f))
             }
