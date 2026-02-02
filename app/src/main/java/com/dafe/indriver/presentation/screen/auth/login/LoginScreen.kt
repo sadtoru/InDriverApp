@@ -1,8 +1,10 @@
 package com.dafe.indriver.presentation.screen.auth.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -30,10 +32,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.dafe.indriver.presentation.components.InDriverTextField
+import com.dafe.indriver.presentation.navigation.screen.auth.AuthScreen
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navHostController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -101,7 +105,13 @@ fun LoginScreen() {
                         .padding(vertical = 16.dp),
                     color = Color.White
                 )
-                Text("Don't have an account? Sign up", color = Color.White)
+                Row {
+                    Text("Don't have an account?", color = Color.White)
+                    Text(" Sign up", color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.clickable{
+                        navHostController.navigate(AuthScreen.Register.route)
+                    })
+
+                }
                 Spacer(modifier = Modifier.weight(.1f))
             }
         }
