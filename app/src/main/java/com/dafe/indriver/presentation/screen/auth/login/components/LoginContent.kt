@@ -32,14 +32,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.dafe.indriver.presentation.components.InDriverTextField
 import com.dafe.indriver.presentation.navigation.screen.auth.AuthScreen
+import com.dafe.indriver.presentation.screen.auth.login.LoginViewModel
 
 @Composable
-fun LoginContent(navHostController: NavHostController, paddingValues: PaddingValues) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginContent(navHostController: NavHostController, paddingValues: PaddingValues, vm: LoginViewModel = hiltViewModel()) {
+
+    val state = vm.state
+
+    var email by remember { mutableStateOf(state.email) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -70,19 +75,19 @@ fun LoginContent(navHostController: NavHostController, paddingValues: PaddingVal
             Spacer(modifier = Modifier.weight(.1f))
             InDriverTextField(
                 modifier = Modifier,
-                value = email,
+                value = state.email,
                 label = "Email",
                 icon = Icons.Outlined.Email,
                 keyboardType = KeyboardType.Email,
-                onValueChange = { email = it })
+                onValueChange = { vm.onEmailInput(it) })
             Spacer(modifier = Modifier.weight(.1f))
             InDriverTextField(
                 modifier = Modifier,
-                value = password,
+                value = state.password,
                 label = "Password",
                 icon = Icons.Outlined.Lock,
                 hideText = true,
-                onValueChange = { password = it}
+                onValueChange = { vm.onPasswordInput(it)}
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
